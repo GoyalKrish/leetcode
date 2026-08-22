@@ -5,7 +5,7 @@ public:
         long long prod = 1;
 
         int temp = n;
-        while(temp > 1){
+        while(temp){
             int dig = temp % 10;
 
             sum += dig;
