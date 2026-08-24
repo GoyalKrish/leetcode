@@ -36,8 +36,6 @@ public:
                 ++size;
                 nextGroupHead = nextGroupHead->next;
             }
-
-            
             
             if(size % 2 == 0){
                 ListNode* newGroupHead = reverse(node, size);
