@@ -2,8 +2,6 @@ class Solution {
 public:
     int countPrimes(int n) {
         if (n <= 2) return 0;
-        
-        // 1. Use vector<char> to avoid bit-manipulation overhead
         vector<char> isPrime(n, true);
         
         // Start by assuming all numbers from 2 to n-1 are prime
