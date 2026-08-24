@@ -5,10 +5,12 @@ public:
         int ans = 0;
         for(int i = 2 ; i < n ; ++i){
             int multi = 1;
-            if(a[i]) ++ans;
-            while(i*multi < n){
-                a[multi * i] = false;
-                ++multi;
+            if(a[i]){
+                ++ans;
+                while(i*multi < n){
+                    a[multi * i] = false;
+                    ++multi;
+                }
             }
         }
 
