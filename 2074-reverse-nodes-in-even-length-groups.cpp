@@ -40,7 +40,8 @@ public:
             ListNode* nextGroupHead = groupTail;
             
             if(size % 2 == 0){
-                ListNode* newGroupHead = reverse(node, size);
+                ListNode* newGroupHead = reverse(node
+                , size);
                 if(prevGroupTail) prevGroupTail->next = newGroupHead;
                 else head = newGroupHead;
 
