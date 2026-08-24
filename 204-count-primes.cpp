@@ -7,9 +7,10 @@ public:
         a[1] = false;
 
         int ans = 0;
-        for(int i = 2 ; i * i < n ; ++i){
+        for(int i = 4 ; i < n ; i+=2) a[i] = false;
+        for(int i = 3 ; i * i < n ; i+=2){
             if(a[i]){
-                for(int j = i * i ; j < n ; j+=i) a[j] = false;
+                for(int j = i * i ; j < n ; j+= 2 * i) a[j] = false;
             }
         }
 
