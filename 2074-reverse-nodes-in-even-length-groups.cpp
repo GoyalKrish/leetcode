@@ -31,17 +31,16 @@ public:
 
         while(node){
             int size = 0;
-            ListNode* groupTail = node;
-            while(groupTail && size < currGroup){
+            ListNode* nextGroupHead = node;
+            while(nextGroupHead && size < currGroup){
                 ++size;
-                groupTail = groupTail->next;
+                nextGroupHead = nextGroupHead->next;
             }
 
-            ListNode* nextGroupHead = groupTail;
+            
             
             if(size % 2 == 0){
-                ListNode* newGroupHead = reverse(node
-                , size);
+                ListNode* newGroupHead = reverse(node, size);
                 if(prevGroupTail) prevGroupTail->next = newGroupHead;
                 else head = newGroupHead;
 
