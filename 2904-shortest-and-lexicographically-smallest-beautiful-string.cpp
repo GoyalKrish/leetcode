@@ -18,7 +18,7 @@ public:
                 string curr = s.substr(i, j - i + 1);
                 if(ans.size() == 0 ||
                     ans.size() > curr.size() ||
-                    ans > curr){
+                    (curr.size() == ans.size() && ans > curr)){
                         ans = curr;
                     }
             }
