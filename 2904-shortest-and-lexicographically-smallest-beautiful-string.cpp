@@ -2,35 +2,31 @@ class Solution {
 public:
     string shortestBeautifulSubstring(string s, int k) {
         int i = 0, j = 0, co = 0;
-        int asize = INT_MAX;
         int n = s.size();
+        string ans = "";
 
         vector<string> candidates;
         while(j < n){
-            co += s[j] == '1' ? 1 : 0;
+            co += s[j] == '1';
             
-            while(co > k || s[i] == '0'){
-                co -= s[i] == '1' ? 1 : 0;
+            while(co > k || (i <= j && s[i] == '0')){
+                co -= s[i] == '1';
                 ++i;
             }
 
             if(co == k){
-                if(j - i + 1 < asize){
-                    asize = j - i + 1;
-                    candidates.clear();
-                    candidates.push_back(s.substr(i,asize));
-                }else if(j - i + 1 == asize){
-                    candidates.push_back(s.substr(i,asize));
-                }
+                string curr = s.substr(i, j - i + 1);
+                if(ans.size() == 0 ||
+                    ans.size() > curr.size() ||
+                    ans > curr){
+                        ans = curr;
+                    }
             }
 
             ++j;
         }
-        if(candidates.size() == 0) return "";
-        sort(candidates.begin(), candidates.end());
         
-        for(const auto& c : candidates) cout << c << endl;
 
-        return candidates[0];
+        return ans;
     }
 };
