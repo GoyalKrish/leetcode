@@ -4,28 +4,28 @@ public:
         int n = s.size();
         if(n == 1) return s > t ? s : "";
 
-        vector<int> cnt(26);
+        vector<int> cnt(26, 0);
         for(const auto& c : s) cnt[c - 'a']++;
 
-        char center;
+        string center = "";
         for(int i = 0 ; i < 26 ; ++i){
             if(cnt[i] % 2 != 0){
-                if(center){
+                if(center != ""){
                     return "";
                 }
-                center = 'a' + i;
+                center += 'a' + i;
             }
-            cnt[i]>>1;
+            cnt[i] /= 2;
         }
 
-
+        string prefix = ""
         const auto check = [&](char c) -> bool {
-            string pref = left;
+            string pref = prefix;
 
             pref += c;
 
-            for(int i = 0 ; i < 26 ; ++i){
-                pref.append('a' + i, cnt[i]);
+            for(int i = 25 ; i >= 0 ; --i){
+                pref.append(cnt[i], 'a' + i);
             }
 
             string rev = pref;
@@ -38,11 +38,17 @@ public:
 
 
         for(int i = 0 ; i < n/2 ; ++i){
-            
-
-            for(int j = 25 ; j >= 0 ; --j){
-                if(cnt[j])
+            bool found = false;
+            for(int j = 0 ; j < 26 ; ++j){
+                if(cnt[j] == 0) continue;
             }
+
+            --cnt[j];
+            if(check('a' + j)){
+                prefix.push_back('a' + j);
+                found = true;
+                break;
+            }else ++cnt[j];
         }
 
     }
