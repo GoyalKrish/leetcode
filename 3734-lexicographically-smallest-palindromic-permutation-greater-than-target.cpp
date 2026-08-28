@@ -18,7 +18,7 @@ public:
             cnt[i] /= 2;
         }
 
-        string prefix = ""
+        string prefix = "";
         const auto check = [&](char c) -> bool {
             string pref = prefix;
 
@@ -41,15 +41,35 @@ public:
             bool found = false;
             for(int j = 0 ; j < 26 ; ++j){
                 if(cnt[j] == 0) continue;
-            }
+                
 
-            --cnt[j];
-            if(check('a' + j)){
-                prefix.push_back('a' + j);
-                found = true;
-                break;
-            }else ++cnt[j];
+                --cnt[j];
+                if(check('a' + j)){
+                    prefix.push_back('a' + j);
+                    found = true;
+                    break;
+                }else ++cnt[j];
+            }
+            if(!found) return "";
+
+
+            if(prefix[i] > t[i]) {
+                string left = prefix;
+                for(int j = 0 ; j < 26 ; ++j) left.append(cnt[j], 'a' + j);
+
+                string palin = left + center;
+                string rev = left;
+                reverse(rev.begin(),rev.end());
+
+                palin += rev;
+                return palin;
+            }
         }
 
+        string ans = prefix + center;
+        string rev = prefix;
+        reverse(rev.begin(), rev.end());
+        ans += rev;
+        return ans;
     }
 };
