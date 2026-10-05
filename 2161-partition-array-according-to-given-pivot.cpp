@@ -4,9 +4,9 @@ public:
         vector<int> less, more;
         int countEq = 0;
 
-        for(const auto& n : nums){
-            if(n < pivot) less.push_back(n);
-            else if(n > pivot) more.push_back(n);
+        for(const auto& nn : nums){
+            if(nn < pivot) less.push_back(nn);
+            else if(nn > pivot) more.push_back(nn);
             else ++countEq;
 
         }
