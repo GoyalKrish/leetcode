@@ -3,7 +3,7 @@ public:
     string removeOuterParentheses(string s) {
         int bal = 0;
         string ans = "";
-        for(const auto& c : s){
+        for(const char& c : s){
             if(c == '('){
                 if(bal != 0) ans += c;
                 ++bal;
