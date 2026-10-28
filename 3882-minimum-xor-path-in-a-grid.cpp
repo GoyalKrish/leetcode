@@ -1,28 +1,35 @@
 class Solution {
-    vector<vector<int>> dp;
-    int m,n;
-    
-    void rec(const vector<vector<int>>& grid,const int x, const int y, int cost){
-        if(x == m-1 && y == n-1){
-            if(dp[x][y] == -1) dp[x][y] = cost^grid[x][y];
-            else dp[x][y] = min(dp[x][y], cost ^ grid[x][y]);
-            return dp[x][y];
-        }
-
-        
-        cost = cost ^ grid[x][y];
-        if(x < m - 1) rec(grid,x+1,y,cost);
-        if(y < n - 1) rec(grid,x,y+1,cost);
-
-    }
 public:
     int minCost(vector<vector<int>>& grid) {
-        m = grid.size();
-        n = grid[0].size();
-        dp.assign(m,vector<int>(n, -1));
+        const int m = grid.size();
+        const int n = grid[0].size();
 
-        ans = INT_MAX;
-        return rec(grid,0,0,1);
-        
+        vector<array<bool,1024>> dp(n);
+        array<bool,1024> next{};
+
+        dp[0][grid[0][0]] = true;
+        for(int i = 0 ; i < m ; ++i){
+            for(int j = 0 ; j < n ; ++j){
+                if(i == 0 && j == 0) continue;
+
+                const int value = grid[i][j];
+                next.fill(false);
+
+                for(int k = 0 ; k < 1024 ; ++k){
+                    if(dp[j][k] || (j > 0 && dp[j - 1][k])){
+                        next[k ^ value] = true;
+                    }
+                }
+
+                dp[j] = next;
+            }
+        }
+
+        for(int k = 0 ; k < 1024 ; ++k){
+            if(dp[n - 1][k]) return k;
+        }
+        return -1;
+
+
     }
 };
