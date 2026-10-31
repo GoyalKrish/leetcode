@@ -1,46 +1,38 @@
 class Solution {
-    int ans = 0;
-    int modulo = 1e9+7;
-    int m,n;
-    vector<vector<int>> dp;
-
-    void rec(const vector<vector<int>>& grid, int x, int y, bool goingRight){
-        if(x == m - 1 && y == n - 1){
-            ++ans;
-            return;
-        }
-
-        
-
-        //right
-        if(y < n - 1){
-            if(grid[x][y+1] == 1){
-                if(x < m - 1) rec(grid,x+1,y+1,false);
-            }else{
-                rec(grid,x,y+1,true);
-            }
-        }
-
-        if(x < m - 1){
-            if(grid[x+1][y] == 1){
-                if(y < n - 1) rec(grid,x+1,y+1,true);
-            }else{
-                rec(grid,x+1,y,false);
-            }
-        }
-    }
-
 public:
     int uniquePaths(vector<vector<int>>& grid) {
-        m = grid.size();
-        n = grid[0].size();
+        constexpr int MOD = 1'000'000'007;
 
-        dp.assign(m,vector<int>(n,-1));
-        dp[m-1][n-1] = 1;
+        int m = grid.size();
+        int n = grid[0].size();
 
-        rec(grid,0,0,false);
-        // rec(grid,0,0,true);
+        // f[i][j][0]: enter (i, j) by moving down
+        // f[i][j][1]: enter (i, j) by moving right
+        vector<vector<array<long long, 2>>> f(
+            m, vector<array<long long, 2>>(n, {0, 0}));
 
-        return ans;
+        f[0][0][0] = 1;
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i > 0) {
+                    if (grid[i - 1][j] == 0) {
+                        f[i][j][0] = (f[i - 1][j][0] + f[i - 1][j][1]) % MOD;
+                    } else {
+                        f[i][j][0] = f[i - 1][j][1];
+                    }
+                }
+
+                if (j > 0) {
+                    if (grid[i][j - 1] == 0) {
+                        f[i][j][1] = (f[i][j - 1][0] + f[i][j - 1][1]) % MOD;
+                    } else {
+                        f[i][j][1] = f[i][j - 1][0];
+                    }
+                }
+            }
+        }
+
+        return (f[m - 1][n - 1][0] + f[m - 1][n - 1][1]) % MOD;
     }
 };
